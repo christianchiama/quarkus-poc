@@ -5,7 +5,6 @@ package it.wefox.com.repository;
  * --
  */
 import it.wefox.com.domain.Customer;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,6 +4,7 @@ package it.wefox.com.domain;
  * @author Christian Chiama
  * --
  */
+import it.wefox.quarkus.dto.CustomerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @Table(name = "customers")
-public class Customer {
+public class Customer implements CustomerDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
