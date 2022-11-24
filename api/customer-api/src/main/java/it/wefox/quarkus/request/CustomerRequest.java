@@ -1,4 +1,4 @@
-package it.wefox.quarkus.command;
+package it.wefox.quarkus.request;
 
 /**
  * @author Christian Chiama
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Schema(description = "customer create or update data")
-public interface CustomerCommand {
+public interface CustomerRequest {
 
     @NotNull
     @NotBlank

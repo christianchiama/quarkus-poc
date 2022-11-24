@@ -54,33 +54,24 @@ services:
     #volumes:
     #    - ./consul-volume/data:/consul/data
     #    - ./consul-volume/config:/consul/config
-  redis:
-    container_name: redis
-    image: redis/redis-stack-server:latest
-    restart: on-failure
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./redis-volume/:/data
-  db:
-    container_name: mongo-db
-    image: mongo:latest
-    restart: on-failure
+  mongodb:
+    container_name: mongodb
+    image: 'mongo:4.4.3'
+    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgr3s
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "postgres" ]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    stdin_open: true
-    tty: true
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 250977cc
+    ports:
+      - 27017-27019:27017-27019
     volumes:
-      - ./postgres-init:/docker-entrypoint-initdb.d
+      - ./volumes/mongo:/data/db
+
   customer-service:
     container_name: customer-service
-    image: customer-service:latest
+    build:
+      context: .
+      dockerfile: ../services/customer-service/src/main/docker/Dockerfile.native
+    image: services/customer-service:native
     depends_on:
       - db
       - jaeger
@@ -101,61 +92,3 @@ services:
       KAFKA_PORT: 29092
     ports:
       - "8080:8080"
-  pet-service:
-    container_name: pet-service
-    image: pet-service:latest
-    depends_on:
-      - db
-      - jaeger
-      - consul
-    environment:
-      MICRONAUT_ENVIRONMENTS: prod
-      SERVER_PORT: 8081
-      JDBC_HOST: db
-      JDBC_PORT: 5432
-      JDBC_USER: postgres
-      JDBC_PASSWORD: postgr3s
-      JDBC_DB: pet_service
-      CONSUL_HOST: consul
-      CONSUL_PORT: 8500
-      JAEGER_HOST: http://jaeger
-      JAEGER_PORT: 14250
-      KAFKA_HOST: kafka
-      KAFKA_PORT: 29092
-    ports:
-      - "8081:8081"
-  treatment-service:
-    container_name: treatment-service
-    image: treatment-service:latest
-    depends_on:
-      - db
-      - jaeger
-      - consul
-    environment:
-      MICRONAUT_ENVIRONMENTS: prod
-      SERVER_PORT: 8082
-      JDBC_HOST: db
-      JDBC_PORT: 5432
-      JDBC_USER: postgres
-      JDBC_PASSWORD: postgr3s
-      JDBC_DB: treatment_service
-      CONSUL_HOST: consul
-      CONSUL_PORT: 8500
-      JAEGER_HOST: http://jaeger
-      JAEGER_PORT: 14250
-      KAFKA_HOST: kafka
-      KAFKA_PORT: 29092
-    ports:
-      - "8082:8082"
-  rapidoc-service:
-    container_name: rapidoc-service
-    image: rapidoc-service:latest
-    depends_on:
-      - customer-service
-      - pet-service
-      - treatment-service
-    environment:
-      MICRONAUT_ENVIRONMENTS: prod
-      SERVER_PORT: 8083
-    ports:
-      - "8083:8083"
