@@ -6,10 +6,7 @@ package it.wefox.quarkus.domain;
  */
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoEntityBase;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
@@ -23,7 +20,10 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @NoArgsConstructor
-@MongoEntity(database = "pets")
+@AllArgsConstructor
+@MongoEntity(
+        database = "pet-service",
+        collection = "pet")
 public class Pet extends ReactivePanacheMongoEntityBase {
 
     @BsonProperty("id")

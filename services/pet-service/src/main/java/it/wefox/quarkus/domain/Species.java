@@ -23,7 +23,9 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @NoArgsConstructor
-@MongoEntity(database = "pet-service", collection="pet")
+@MongoEntity(
+        database = "pet-service",
+        collection="species")
 public class Species extends ReactivePanacheMongoEntityBase {
 
     @BsonProperty("id")

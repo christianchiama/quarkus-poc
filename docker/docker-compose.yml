@@ -69,21 +69,14 @@ services:
   customer-service:
     container_name: customer-service
     build:
-      context: .
-      dockerfile: ../services/customer-service/src/main/docker/Dockerfile.native
-    image: services/customer-service:native
+      context: ../services/customer-service/
+    image: customer-service:latest
     depends_on:
-      - db
+      - mongodb
       - jaeger
       - consul
     environment:
-      MICRONAUT_ENVIRONMENTS: prod
-      SERVER_PORT: 8080
-      JDBC_HOST: db
-      JDBC_PORT: 5432
-      JDBC_USER: postgres
-      JDBC_PASSWORD: postgr3s
-      JDBC_DB: customer_service
+      SERVER_PORT: 8081
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
       JAEGER_HOST: http://jaeger
@@ -91,4 +84,65 @@ services:
       KAFKA_HOST: kafka
       KAFKA_PORT: 29092
     ports:
-      - "8080:8080"
+      - "8081:8081"
+  pet-clinic-service:
+    container_name: pet-clinic-service
+    build:
+      context: ../services/pet-clinic-service
+      dockerfile: ../services/pet-clinic-service/Dockerfile
+    image: pet-clinic-service:latest
+    working_dir: "/app"
+    depends_on:
+      - mongodb
+      - jaeger
+      - consul
+    environment:
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      JAEGER_HOST: http://jaeger
+      JAEGER_PORT: 14250
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 29092
+    ports:
+      - "127.0.0.1:8082:8082"
+  pet-service:
+    container_name: pet-service
+    build:
+      context: ../services/pet-service
+      dockerfile: ../services/pet-service/Dockerfile
+    image: pet-service:latest
+    working_dir: "/app"
+    depends_on:
+      - mongodb
+      - jaeger
+      - consul
+    environment:
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      JAEGER_HOST: http://jaeger
+      JAEGER_PORT: 14250
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 29092
+    network_mode: host
+    ports:
+      - "127.0.0.1:8083:8083"
+
+  treatment-service:
+    container_name: treatment-service
+    build:
+      context: ../services/treatment-service
+    image: treatment-service:latest
+    depends_on:
+      - mongodb
+      - jaeger
+      - consul
+    environment:
+      SERVER_PORT: 8084
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      JAEGER_HOST: http://jaeger
+      JAEGER_PORT: 14250
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 29092
+    ports:
+      - "8084:8084"

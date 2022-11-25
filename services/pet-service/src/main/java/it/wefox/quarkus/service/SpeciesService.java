@@ -36,7 +36,7 @@ public class SpeciesService {
         return speciesUni.onItem().transform(s -> {
             s.setName(species.getName());
             return s;
-        }).call(s -> species.persist().chain(s::persistOrUpdate));
+        }).call(s -> species.persist());
     }
 
     /**
@@ -55,7 +55,6 @@ public class SpeciesService {
                 }).call(c -> Species.update(c));
     }
 
-
     /**
      *
      * @param id
@@ -67,16 +66,6 @@ public class SpeciesService {
         return speciesUni
                 .onItem()
                 .call(c -> speciesReactiveMongoRepository.deleteById(speciesId));
-    }
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public Uni<Species> findById(String id) {
-        ObjectId speciesId = new ObjectId(id);
-        return speciesReactiveMongoRepository.findById(speciesId);
     }
 
     /**

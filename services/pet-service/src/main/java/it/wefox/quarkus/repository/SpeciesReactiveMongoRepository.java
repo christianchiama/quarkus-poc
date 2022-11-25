@@ -13,8 +13,6 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class SpeciesReactiveMongoRepository implements ReactivePanacheMongoRepositoryBase<Species, ObjectId> {
-
-
     public Uni<Species> findByName(String name) {
         return find("name",name).firstResult();
     }
