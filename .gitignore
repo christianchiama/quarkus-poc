@@ -39,6 +39,6 @@ build/
 .DS_Store
 /.idea/
 
-/docker/**
-/docker/volumes/mongo
+/docker/volumes
+/docker/kafka-connect-mongodb
 /target/

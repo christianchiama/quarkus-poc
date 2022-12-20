@@ -1,0 +1,231 @@
+version: '3.6'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.1.2
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - localnet
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-enterprise-kafka:5.1.2
+    hostname: broker
+    container_name: broker
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+    networks:
+      - localnet
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+      CONFLUENT_METRICS_ENABLE: 'true'
+      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+
+  connect:
+    image: confluentinc/cp-kafka-connect:5.1.2
+    hostname: connect
+    container_name: connect
+    depends_on:
+      - zookeeper
+      - broker
+    ports:
+      - "8083:8083"
+    networks:
+      - localnet
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
+      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
+      CONNECT_LOG4J_LOGGERS: "org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR,com.mongodb.kafka=DEBUG"
+      CONNECT_PLUGIN_PATH: /usr/share/confluent-hub-components
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      # Assumes image is based on confluentinc/kafka-connect-datagen:latest which is pulling 5.2.2 Connect image
+      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.2.2.jar
+      CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+    command: "bash -c 'if [ ! -d /usr/share/confluent-hub-components/confluentinc-kafka-connect-datagen ]; then echo \"WARNING: Did not find directory for kafka-connect-datagen (did you remember to run: docker-compose up -d --build ?)\"; fi ; /etc/confluent/docker/run'"
+    volumes:
+      - ./kafka-connect-mongodb:/usr/share/confluent-hub-components/kafka-connect-mongodb
+
+  # MongoDB Replica Set
+  mongo1:
+    image: "mongo:4.0-xenial"
+    container_name: mongo1
+    environment:
+      - MONGO_INITDB_DATABASE=customer-service
+      - MONGO_DB_USERNAME=root
+      - MONGO_DB_PASSWORD=250977cc
+    volumes:
+      - rs1:/data/db
+    networks:
+      - localnet
+    ports:
+      - "27018:27017"
+    restart: always
+
+  mongo2:
+    image: "mongo:4.0-xenial"
+    container_name: mongo2
+    volumes:
+      - rs2:/data/db
+    networks:
+      - localnet
+    ports:
+      - "27019:27017"
+    restart: always
+
+  mongo3:
+    image: "mongo:4.0-xenial"
+    container_name: mongo3
+    environment:
+      - MONGO_INITDB_DATABASE=pet-service
+      - MONGO_DB_USERNAME=root
+      - MONGO_DB_PASSWORD=250977cc
+    volumes:
+      - rs3:/data/db
+    networks:
+      - localnet
+    ports:
+      - "27020:27017"
+    restart: always
+
+  mongo4:
+    image: "mongo:4.0-xenial"
+    container_name: mongo4
+    environment:
+      - MONGO_INITDB_DATABASE=treatment-service
+      - MONGO_DB_USERNAME=root
+      - MONGO_DB_PASSWORD=250977cc
+    volumes:
+      - rs4:/data/db
+    networks:
+      - localnet
+    ports:
+      - "27021:27017"
+    restart: always
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    restart: on-failure
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
+  consul:
+    container_name: consul
+    image: consul
+    restart: on-failure
+    ports:
+      - "8500:8500"
+
+#  customer-service:
+#    container_name: customer-service
+#    build:
+#      context: ../services/customer-service/
+#      dockerfile: ../customer-service/Dockerfile
+#    image: customer-service:latest
+#    depends_on:
+#      - mongo1
+#      - jaeger
+#      - consul
+#    ports:
+#      - "8085:8085"
+#    networks:
+#      - localnet
+#    links:
+#      - mongo1
+
+#  pet-clinic-service:
+#    container_name: pet-clinic-service
+#    build:
+#      context: ../services/pet-clinic-service
+#      dockerfile: ../pet-clinic-service/Dockerfile
+#    image: pet-clinic-service:latest
+#    depends_on:
+#      - jaeger
+#      - consul
+#    networks:
+#      - localnet
+#    ports:
+#      - "8086:8086"
+#
+  pet-service:
+    container_name: pet-service
+    build:
+      context: ../services/pet-service
+      dockerfile: ../pet-service/Dockerfile
+    image: pet-service:latest
+    depends_on:
+      - mongo3
+      - jaeger
+      - consul
+    ports:
+      - "8087:8087"
+    expose:
+      - '8087'
+    networks:
+      - localnet
+
+  treatment-service:
+    container_name: treatment-service
+    build:
+      context: ../services/treatment-service
+      dockerfile: ../treatment-service/Dockerfile
+    image: treatment-service:latest
+    depends_on:
+      - mongo4
+      - jaeger
+      - consul
+    ports:
+      - "8088:8088"
+    expose:
+      - '8088'
+    networks:
+      - localnet
+
+
+networks:
+  localnet:
+    attachable: true
+    driver: bridge
+
+volumes:
+  rs1:
+  rs2:
+  rs3:
+  rs4:
