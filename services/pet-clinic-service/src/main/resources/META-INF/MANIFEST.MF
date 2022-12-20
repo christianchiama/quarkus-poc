@@ -1,0 +1,114 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven 3.8.1
+Built-By: christian
+Build-Jdk: 11.0.15
+Class-Path: quarkus-resteasy-reactive-jsonb-2.14.3.Final.jar resteasy-re
+ active-jsonb-2.14.3.Final.jar resteasy-reactive-2.14.3.Final.jar yasson
+ -1.0.11.jar jakarta.json.bind-api-1.0.2.jar commons-logging-jboss-loggi
+ ng-1.0.0.Final.jar jboss-jaxb-api_2.3_spec-2.0.0.Final.jar jboss-loggin
+ g-3.5.0.Final.jar quarkus-resteasy-reactive-jsonb-common-2.14.3.Final.j
+ ar quarkus-jsonb-2.14.3.Final.jar quarkus-resteasy-reactive-jackson-2.1
+ 4.3.Final.jar quarkus-resteasy-reactive-jackson-common-2.14.3.Final.jar
+  quarkus-resteasy-reactive-2.14.3.Final.jar quarkus-resteasy-reactive-c
+ ommon-2.14.3.Final.jar resteasy-reactive-common-2.14.3.Final.jar restea
+ sy-reactive-common-types-2.14.3.Final.jar resteasy-reactive-vertx-2.14.
+ 3.Final.jar vertx-web-4.3.4.jar vertx-web-common-4.3.4.jar vertx-auth-c
+ ommon-4.3.4.jar vertx-bridge-common-4.3.4.jar smallrye-mutiny-vertx-cor
+ e-2.27.0.jar smallrye-mutiny-vertx-runtime-2.27.0.jar vertx-mutiny-gene
+ rator-2.27.0.jar vertx-codegen-4.3.4.jar jakarta.enterprise.cdi-api-2.0
+ .2.jar jakarta.el-api-3.0.3.jar jakarta.interceptor-api-1.2.5.jar quark
+ us-vertx-http-2.14.3.Final.jar quarkus-security-runtime-spi-2.14.3.Fina
+ l.jar quarkus-credentials-2.14.3.Final.jar smallrye-common-vertx-contex
+ t-1.13.2.jar smallrye-common-constraint-1.13.2.jar quarkus-vertx-http-d
+ ev-console-runtime-spi-2.14.3.Final.jar quarkus-security-1.1.4.Final.ja
+ r smallrye-mutiny-vertx-web-2.27.0.jar smallrye-mutiny-vertx-web-common
+ -2.27.0.jar smallrye-mutiny-vertx-auth-common-2.27.0.jar smallrye-mutin
+ y-vertx-bridge-common-2.27.0.jar smallrye-mutiny-vertx-uri-template-2.2
+ 7.0.jar vertx-uri-template-4.3.4.jar org-crac-0.1.1.jar quarkus-jsonp-2
+ .14.3.Final.jar jakarta.json-1.1.6.jar quarkus-arc-2.14.3.Final.jar arc
+ -2.14.3.Final.jar jakarta.transaction-api-1.3.3.jar mutiny-1.8.0.jar qu
+ arkus-core-2.14.3.Final.jar jakarta.inject-api-1.0.jar quarkus-ide-laun
+ cher-2.14.3.Final.jar quarkus-development-mode-spi-2.14.3.Final.jar sma
+ llrye-config-2.12.1.jar smallrye-config-core-2.12.1.jar smallrye-common
+ -expression-1.13.2.jar smallrye-common-function-1.13.2.jar smallrye-com
+ mon-classloader-1.13.2.jar smallrye-config-common-2.12.1.jar jboss-logm
+ anager-embedded-1.0.11.jar jboss-logging-annotations-2.2.1.Final.jar jb
+ oss-threads-3.4.3.Final.jar slf4j-api-1.7.36.jar slf4j-jboss-logmanager
+ -1.2.0.Final.jar graal-sdk-22.3.0.jar wildfly-common-1.5.4.Final-format
+ -001.jar quarkus-bootstrap-runner-2.14.3.Final.jar quarkus-fs-util-0.0.
+ 9.jar microprofile-context-propagation-api-1.2.jar quarkus-rest-client-
+ reactive-jackson-2.14.3.Final.jar resteasy-reactive-jackson-2.14.3.Fina
+ l.jar jackson-databind-2.13.4.2.jar jackson-annotations-2.13.4.jar quar
+ kus-rest-client-reactive-2.14.3.Final.jar quarkus-jaxrs-client-reactive
+ -2.14.3.Final.jar resteasy-reactive-client-2.14.3.Final.jar vertx-web-c
+ lient-4.3.4.jar quarkus-smallrye-stork-2.14.3.Final.jar quarkus-rest-cl
+ ient-config-2.14.3.Final.jar stork-api-1.3.3.jar stork-core-1.3.3.jar m
+ icroprofile-rest-client-api-2.0.jar smallrye-common-io-1.13.2.jar jande
+ x-3.0.5.jar customer-service-1.0-SNAPSHOT.jar mongojack-4.7.0.jar jacks
+ on-datatype-jsr310-2.13.4.jar customer-api-1.0-SNAPSHOT.jar javax.persi
+ stence-api-2.2.jar validation-api-2.0.1.Final.jar customer-commons-1.0-
+ SNAPSHOT.jar pet-service-1.0-SNAPSHOT.jar pet-api-1.0-SNAPSHOT.jar pagi
+ nation-1.0-SNAPSHOT.jar treatment-service-1.0-SNAPSHOT.jar treatment-ap
+ i-1.0-SNAPSHOT.jar pet-clinic-api-1.0-SNAPSHOT.jar quarkus-smallrye-rea
+ ctive-messaging-kafka-2.14.3.Final.jar quarkus-kafka-client-2.14.3.Fina
+ l.jar quarkus-caffeine-2.14.3.Final.jar caffeine-3.1.1.jar error_prone_
+ annotations-2.16.jar smallrye-reactive-messaging-kafka-3.21.0.jar small
+ rye-reactive-messaging-kafka-api-3.21.0.jar opentelemetry-api-1.18.0.ja
+ r opentelemetry-context-1.18.0.jar opentelemetry-semconv-1.18.0-alpha.j
+ ar microprofile-metrics-api-3.0.1.jar smallrye-reactive-converter-api-2
+ .7.0.jar quarkus-jackson-2.14.3.Final.jar jackson-datatype-jdk8-2.13.4.
+ jar jackson-module-parameter-names-2.13.4.jar kafka-clients-3.3.1.jar z
+ std-jni-1.5.2-1.jar lz4-java-1.8.0.jar snappy-java-1.1.8.4.jar vertx-ka
+ fka-client-4.3.4.jar vertx-core-4.3.4.jar netty-common-4.1.82.Final.jar
+  netty-buffer-4.1.82.Final.jar netty-transport-4.1.82.Final.jar netty-h
+ andler-4.1.82.Final.jar netty-transport-native-unix-common-4.1.82.Final
+ .jar netty-handler-proxy-4.1.82.Final.jar netty-codec-socks-4.1.82.Fina
+ l.jar netty-codec-http-4.1.82.Final.jar netty-codec-http2-4.1.82.Final.
+ jar netty-resolver-4.1.82.Final.jar netty-resolver-dns-4.1.82.Final.jar
+  netty-codec-dns-4.1.82.Final.jar quarkus-smallrye-reactive-messaging-2
+ .14.3.Final.jar quarkus-smallrye-reactive-messaging-kotlin-2.14.3.Final
+ .jar smallrye-reactive-messaging-health-3.21.0.jar microprofile-health-
+ api-3.1.jar smallrye-reactive-messaging-provider-3.21.0.jar smallrye-re
+ active-messaging-api-3.21.0.jar jakarta.annotation-api-1.3.5.jar quarku
+ s-mongodb-panache-2.14.3.Final.jar quarkus-panache-common-2.14.3.Final.
+ jar quarkus-mongodb-panache-common-2.14.3.Final.jar quarkus-panacheql-2
+ .14.3.Final.jar antlr4-runtime-4.9.2.jar quarkus-narayana-jta-2.14.3.Fi
+ nal.jar quarkus-transaction-annotations-2.14.3.Final.jar smallrye-conte
+ xt-propagation-jta-1.2.2.jar smallrye-reactive-converter-mutiny-2.7.0.j
+ ar narayana-jta-5.13.1.Final.jar jboss-transaction-spi-7.6.0.Final.jar 
+ jboss-connector-api_1.7_spec-1.0.0.Final.jar narayana-jts-integration-5
+ .13.1.Final.jar quarkus-hibernate-validator-2.14.3.Final.jar hibernate-
+ validator-6.2.5.Final.jar jakarta.validation-api-2.0.2.jar classmate-1.
+ 5.1.jar jakarta.el-3.0.4.jar smallrye-config-validator-2.12.1.jar jboss
+ -jaxrs-api_2.1_spec-2.0.1.Final.jar quarkus-hibernate-reactive-panache-
+ 2.14.3.Final.jar quarkus-hibernate-reactive-2.14.3.Final.jar quarkus-hi
+ bernate-orm-2.14.3.Final.jar hibernate-core-5.6.14.Final.jar byte-buddy
+ -1.12.18.jar antlr-2.7.7.jar hibernate-commons-annotations-5.1.2.Final.
+ jar hibernate-graalvm-5.6.14.Final.jar jaxb-runtime-2.3.3-b02.jar txw2-
+ 2.3.3-b02.jar istack-commons-runtime-3.0.10.jar jakarta.activation-1.2.
+ 1.jar jakarta.persistence-api-2.2.3.jar quarkus-local-cache-0.1.1.jar q
+ uarkus-reactive-datasource-2.14.3.Final.jar quarkus-datasource-2.14.3.F
+ inal.jar quarkus-datasource-common-2.14.3.Final.jar vertx-sql-client-4.
+ 3.4.jar hibernate-reactive-core-1.1.9.Final.jar quarkus-hibernate-react
+ ive-panache-common-2.14.3.Final.jar quarkus-panache-hibernate-common-2.
+ 14.3.Final.jar smallrye-common-annotation-1.13.2.jar quarkus-mongodb-cl
+ ient-2.14.3.Final.jar quarkus-mutiny-2.14.3.Final.jar quarkus-smallrye-
+ context-propagation-2.14.3.Final.jar smallrye-context-propagation-1.2.2
+ .jar smallrye-context-propagation-api-1.2.2.jar smallrye-context-propag
+ ation-storage-1.2.2.jar mutiny-smallrye-context-propagation-1.8.0.jar q
+ uarkus-vertx-2.14.3.Final.jar quarkus-netty-2.14.3.Final.jar netty-code
+ c-4.1.82.Final.jar brotli4j-1.8.0.jar native-osx-x86_64-1.8.0.jar netty
+ -codec-haproxy-4.1.82.Final.jar quarkus-vertx-latebound-mdc-provider-2.
+ 14.3.Final.jar smallrye-fault-tolerance-vertx-5.5.0.jar quarkus-mutiny-
+ reactive-streams-operators-2.14.3.Final.jar microprofile-reactive-strea
+ ms-operators-api-1.0.1.jar microprofile-reactive-streams-operators-core
+ -1.0.1.jar mutiny-reactive-streams-operators-1.8.0.jar mongodb-driver-s
+ ync-4.7.2.jar bson-4.7.2.jar mongodb-driver-core-4.7.2.jar bson-record-
+ codec-4.7.2.jar mongodb-driver-reactivestreams-4.7.2.jar reactive-strea
+ ms-1.0.3.jar reactor-core-3.2.22.RELEASE.jar mongodb-crypt-1.5.2.jar jn
+ a-5.8.0.jar quarkus-smallrye-openapi-2.14.3.Final.jar smallrye-open-api
+ -core-2.3.1.jar microprofile-openapi-api-2.0.1.jar microprofile-config-
+ api-2.0.1.jar jackson-core-2.13.4.jar jackson-dataformat-yaml-2.13.4.ja
+ r snakeyaml-1.33.jar quarkus-swagger-ui-2.14.3.Final.jar
+Main-Class: it.wefox.quarkus.petclinicservice.Application
+

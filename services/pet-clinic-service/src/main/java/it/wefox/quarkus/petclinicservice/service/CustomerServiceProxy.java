@@ -1,19 +1,18 @@
 package it.wefox.quarkus.petclinicservice.service;
 
-import it.wefox.quarkus.api.CustomerApi;
+import it.wefox.quarkus.customerapi.api.CustomerApi;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 /**
- * @author Christian Chiama
- * --
+ * @author: Christian Chiama
+ * @project: quarkus-poc
+ * @Date: 06/12/22
+ * @Time: 19:55
  */
-@RegisterRestClient(configKey = "customer-service.proxy")
-@Path(value = "/customers")
-public interface CustomerServiceProxy extends CustomerApi {
 
-    @GET
-    public default void hello(){}
+@RegisterRestClient(configKey = "customer-api")
+@Path("/customers")
+public interface CustomerServiceProxy extends CustomerApi {
 }

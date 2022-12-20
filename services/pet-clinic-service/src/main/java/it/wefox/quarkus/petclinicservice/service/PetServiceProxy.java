@@ -6,10 +6,12 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import javax.ws.rs.Path;
 
 /**
- * @author Christian Chiama
- * --
+ * @author: Christian Chiama
+ * @project: quarkus-poc
+ * @Date: 08/12/22
+ * @Time: 22:29
  */
-@RegisterRestClient(configKey = "pet-service.proxy")
-@Path(value = "/pets")
-public interface PetServiceProxy extends PetApi {}
-
+@RegisterRestClient(configKey = "pet-api")
+@Path("/pets")
+public interface PetServiceProxy extends PetApi {
+}

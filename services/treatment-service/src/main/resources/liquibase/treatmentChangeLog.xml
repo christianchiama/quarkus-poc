@@ -1,0 +1,47 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="cchiama">
+        <ext:createCollection collectionName="liquibase-treatment">
+            <ext:options>
+                {
+                validator: {
+                $jsonSchema: {
+                bsonType: "object",
+                required: ["name","petId","createdAt","price","result"],
+                properties: {
+                name: {
+                bsonType: "string",
+                description: "The name of treatment"
+                },
+                petId: {
+                bsonType: "string",
+                description: "The id of pet"
+                },
+                createdAt: {
+                bsonType: "date",
+                description: "The date of treatment"
+                },
+                price: {
+                bsonType: "double",
+                description: "The name of pet"
+                },
+                result: {
+                bsonType: "object",
+                description: "The treatmentResult of treatment"
+                }
+                }
+                }
+                },
+                validationAction: "warn",
+                validationLevel: "strict"
+                }
+            </ext:options>
+        </ext:createCollection>
+    </changeSet>
+</databaseChangeLog>

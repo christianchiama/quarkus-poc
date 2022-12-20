@@ -1,35 +1,46 @@
 package it.wefox.quarkus.petapi.request;
 
-import io.smallrye.common.constraint.NotNull;
-import io.swagger.v3.oas.annotations.media.Schema;
+import it.wefox.quarkus.treatmentapi.request.TreatmentRequest;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Christian Chiama
  * --
  */
-@Schema(description = "pet create or update data")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "pet mongodb or dto")
 public class PetRequest {
 
-    @NotNull
-    @NotBlank
+    private ObjectId id;
+
+    @NotNull(message = "pet name can't be null or empty")
+    @Size(min = 3, message = "pet name should have at least 3 characters")
     @Schema(description = "name of the pet")
     String name;
 
-    @NotNull
-    @Schema(description = "birth date of the pet", type = "string", format = "date")
+    @NotNull(message = "pet birthdate can't be null or empty")
+    @Schema(description = "birth date of the pet", format = "date")
     LocalDate birthDate;
 
-    @NotNull
-    @NotBlank
-    @Schema(description = "ID of the species of the pet")
-    String speciesId;
+    @NotNull(message = "species can't be null or empty")
+    @Schema(description = "species of the pet")
+    SpeciesRequest species;
 
-    @NotNull
-    @NotBlank
-    @Schema(description = "the customer ID of the owner of the pet")
+    @NotNull(message = "owner id name can't be null or empty")
+    @Schema(description = "the id of the owner of the pet")
     String ownerId;
+
+    List<TreatmentRequest> treatments;
 
 }

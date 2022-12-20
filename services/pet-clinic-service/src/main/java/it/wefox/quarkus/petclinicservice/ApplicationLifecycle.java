@@ -14,7 +14,7 @@ import javax.enterprise.event.Observes;
 @ApplicationScoped
 public class ApplicationLifecycle {
 
-    private static final Logger LOGGER = Logger.getLogger("ListenerBean");
+    private static final Logger LOGGER = Logger.getLogger(ApplicationLifecycle.class);
 
     void onStart(@Observes StartupEvent ev) {
         LOGGER.info("The application is starting...");

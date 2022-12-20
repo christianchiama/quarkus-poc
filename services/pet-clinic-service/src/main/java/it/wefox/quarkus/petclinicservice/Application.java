@@ -1,15 +1,18 @@
 package it.wefox.quarkus.petclinicservice;
 
+import com.mongodb.MongoClientSettings;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.jboss.logging.Logger;
 
 /**
  * @author Christian Chiama
  * --
  */
-@QuarkusMain
+@QuarkusMain(name = "PetClinicServiceApplication")
 public class Application {
     public static void main(String... args) {
         Quarkus.run(PetClinicServiceApplication.class, args);

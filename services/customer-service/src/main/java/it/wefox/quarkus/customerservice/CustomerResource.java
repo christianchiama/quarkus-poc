@@ -2,64 +2,81 @@ package it.wefox.quarkus.customerservice;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import it.wefox.quarkus.customerapi.api.CustomerApi;
+import it.wefox.quarkus.customerapi.request.CustomerRequest;
 import it.wefox.quarkus.customerservice.domain.Customer;
 import it.wefox.quarkus.customerservice.service.CustomerService;
+import it.wefox.quarkus.pagination.PageRequest;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import javax.validation.Valid;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+@RequestScoped
 @Path("/customers")
-public class CustomerResource {
+public class CustomerResource implements CustomerApi {
 
     @Inject
     CustomerService customerService;
 
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Multi<Customer> list() {
-        return customerService.streamAllCustomer();
+    @Override
+    public Multi<Response> list() {
+        return Customer
+                .streamAll()
+                .onItem()
+                .transform(v -> Response.ok(v).build());
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> create(Customer customer) {
-        return customerService.create(customer).map(v -> Response.accepted(v).build());
+
+    @Override
+    public Uni<Response> create(@Valid CustomerRequest customer) {
+        return customerService
+                .create(customer)
+                .onItem()
+                .transform(v -> Response.ok(v).build());
     }
 
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> update(@PathParam("id") String id, Customer customerRequest) {
-        Uni<Customer> customer = customerService.update(id,customerRequest);
-        return customer.map(v -> Response.accepted(v).build());
+    @Override
+    public Uni<Response> update(String id, @Valid CustomerRequest customer) {
+        return customerService
+                .update(id, customer)
+                .onItem()
+                .transform(v -> Response.ok(v).build());
     }
 
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> delete(@PathParam("id") String id) {
-        Uni<Customer> customer = customerService.delete(id);
-        return customer.map(v -> Response.accepted(v).build());
+    @Override
+    public Uni<Response> delete(String id) {
+        return customerService
+                .delete(id)
+                .onItem()
+                .transform(v -> Response.ok(v).build());
     }
 
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> findById(@PathParam("id") String id) {
-        Uni<Customer> customer = customerService.findById(id);
-        return customer.map(v -> Response.accepted(v).build());
+    @Override
+    public Uni<Response> findByName(String name) {
+        return customerService
+                .findByName(name)
+                .onItem()
+                .transform(v -> Response.ok(v).build());
     }
 
-    @GET
-    @Path("/name/{name}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> findByName(@PathParam("name") String name) {
-        Uni<Customer> customer = customerService.findByName(name);
-        return customer.map(v -> Response.accepted(v).build());
+    @Override
+    public Uni<Response> findById(String id) {
+        return customerService
+                .findById(id)
+                .onItem()
+                .transform(v -> Response.ok(v).build());
+    }
+
+    /**
+     * @param pageRequest
+     * @return
+     */
+    @Override
+    public Uni<Response> listPaged(PageRequest pageRequest) {
+        return customerService.listPaged(pageRequest).map(v -> Response.ok(v).build());
     }
 }
